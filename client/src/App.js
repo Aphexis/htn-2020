@@ -1,8 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import LandingPage from './js/LandingPage';
-import FormPage from './js/FormPage';
-import ComparisonPage from './js/ComparisonPage';
+import AuthPage from './js/AuthPage';
 // import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -15,8 +14,8 @@ const App = () => {
       <BrowserRouter>
         <Switch>
           <Route path="/" component={LandingPage} />
-          {/* <Route path="/sign-up" render={(props) => <AuthPage {...props} isSignUp={true}/>} />
-          <Route path="/log-in" render={(props) => <AuthPage {...props} isSignUp={false}/>} /> */}
+          <Route path="/signup" render={(props) => <AuthPage {...props} isSignUp={true}/>} />
+          <Route path="/login" render={(props) => <AuthPage {...props} isSignUp={false}/>} />
         </Switch>
       </BrowserRouter>
     </div>
