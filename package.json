@@ -1,0 +1,17 @@
+{
+  "name": "RecipeComparer",
+  "version": "0.1.0",
+  "description": "Web app for comparing recipes",
+  "private": true,
+  "engines": {
+    "node": "10.x"
+  },
+  "scripts": {
+    "start": "node ./server/bin/www",
+    "build": "cd client && react-scripts build",
+    "test": "cd client && react-scripts test",
+    "eject": "cd client && react-scripts eject",
+    "heroku-postbuild": "npm install --prefix server && npm install --prefix client --only=dev && npm install --prefix client && npm run build --prefix client"
+  },
+  "dependencies": {}
+}
