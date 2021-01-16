@@ -1,7 +1,9 @@
 var createError = require('http-errors');
 var express = require('express');
+var axios = require('axios');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 var logger = require('morgan');
 var Nexmo = require('nexmo');
 require('dotenv').config();
@@ -38,6 +40,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(bodyParser.json());
 
 // API endpoints
 app.use('/', indexRouter);
@@ -128,6 +131,40 @@ app.post('/api/verify/check', (req, res) => {
   });
 })
 
+//Messages Api
+app.post('/answer', function(req, res) {
+  var from_id = req.body.from.id;
+
+  axios.post('https://messages-sandbox.nexmo.com/v0.1/messages',
+  {
+      "from": { "type": "messenger", "id": "107083064136738" },
+      "to": { "type": "messenger", "id": from_id },
+      "message": {
+          "content": {
+              "type": "image",
+              "image": {
+                  "url": "https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg"
+              }
+          }
+      }
+  },
+  {
+      auth: {
+          username:'87bf5295',
+          password:'i0oeJccEnznHhBfW'
+      }
+  }).then(response => {
+      //console.dir(response);
+  }).catch(error => {
+      console.error(error);
+  });
+  res.status(204).end();
+});
+
+app.post('/event', function(req, res) {
+  res.status(204).end();
+});
+
 // Return any remaining requests to the React app to handle routing
 app.get('*', (req,res) =>{
   res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
@@ -149,5 +186,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+app.listen(3002);
 
 module.exports = app;
