@@ -1,4 +1,21 @@
+@import '~bootstrap/scss/bootstrap.scss';
+
+@mixin Font {
+    font-family: 'Verdana', sans-serif;
+    font-style: normal;
+    font-weight: 400px;
+    letter-spacing: 0.02em;
+}
+
+@mixin regular-text {
+    color: rgba(36, 4, 4, 0.7);
+}
+
 $purble: #5533CC;
+$background: #FFFFFF;
+$green-1: #328500;
+$green-2: #BEE4A7;
+$grey: #475141;
 
 // $heading_font_family: "Roboto", "Fira Sans", "Poppins", "Avenir Next", Helvetica, Arial, sans-serif;
 // $body_font_family: "Open Sans", Arial, sans-serif;
@@ -27,3 +44,46 @@ $z_index_max: 40; // Cover everything (modal)
 //   xl: 1200px
 // );
 
+
+.red {
+    @include regular-text;
+    background: rgba(224, 102, 102, 0.7);
+    border: 3px solid #E06666 !important;
+}
+
+.orange {
+    @include regular-text;
+    background: rgba(246, 178, 107, 0.7);
+    border: 3px solid #F6B26B !important;
+}
+
+.yellow {
+    @include regular-text;
+    background: rgba(255, 217, 102, 0.7);
+    border: 3px solid #FFD966 !important;
+}
+
+.green {
+    &-1 {
+        @include regular-text;
+        background: #BEE4A7;
+        border: 3px solid #93C47D !important;
+    }
+    &-2 {
+        color: #328500;
+        background: #FFFFFF;
+        border: 3px solid #BEE4A7 !important;
+    }
+}
+
+.grey {
+    color: #475141;
+    background: rgba(230, 230, 230, 0.7);
+    border: 3px solid rgba(102, 102, 102, 0.7) !important;
+}
+
+.module {
+    @include Font;
+    border: 3px solid;
+    border-radius: 25px;
+}

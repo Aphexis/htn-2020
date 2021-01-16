@@ -1,24 +1,26 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PageContainer from './PageContainer';
+import { Button } from 'react-bootstrap';
+import graphic from '../assets/landing-logo.PNG';
+import '../css/PageContainer.scss';
 
 const LandingComponent = () => {
+  console.log(graphic);
   return (
-    <div>
-        <h2>This is the landing page.</h2>
-        <Link to={{
-            pathname: '/form',
-            state: {fromLanding: false} // seems to be true by default? a bit weird.
-        }}>Form page</Link>
-        {/* use history.push? not sure if this actually works. https://stackoverflow.com/questions/58506891/how-to-get-data-from-prop-location-state-in-react */}
-        <Link to='/comparison/123'>Comparison page</Link>
+    <div className="landing">
+        <img src={graphic} alt="this is image" className="landing-image"/>
+        <div className="button-div">
+          <Button type="button" className="module green-2 button">Sign Up</Button>
+          <Button type="button" className="module green-2 button">Log In</Button>
+        </div>
     </div>
   );
 }
 
 const LandingPage = () => {
   return (
-    <PageContainer hasHeader className="LandingPage">
+    <PageContainer className="LandingPage">
       <LandingComponent />
     </PageContainer>
   )

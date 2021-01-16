@@ -5,18 +5,21 @@ import FormPage from './js/FormPage';
 import ComparisonPage from './js/ComparisonPage';
 // import logo from './logo.svg';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './css/custom.scss';
 
 const App = () => {
   // document.title = 'Recipe Comparer';
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route path="/form" component={FormPage} />
-        <Route path="/comparison/:comparisonId" component={ComparisonPage} />
-        <Route path="/comparison" component={ComparisonPage} />
-        <Route path="/" component={LandingPage} />
-      </Switch>
-    </BrowserRouter>
+    <div className="App">
+      <BrowserRouter>
+        <Switch>
+          <Route path="/" component={LandingPage} />
+          {/* <Route path="/sign-up" render={(props) => <AuthPage {...props} isSignUp={true}/>} />
+          <Route path="/log-in" render={(props) => <AuthPage {...props} isSignUp={false}/>} /> */}
+        </Switch>
+      </BrowserRouter>
+    </div>
   )
 }
 
