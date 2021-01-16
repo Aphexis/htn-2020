@@ -2,8 +2,9 @@ import React from 'react';
 import {useLocation} from 'react-router-dom';
 import PageContainer from './PageContainer';
 
+// was in the middle of this one
 
-const FormComponent = () => {
+const CurrentTaskComponent = () => {
   const location = useLocation();
 
   return (
@@ -12,12 +13,12 @@ const FormComponent = () => {
     </div>
   )
 }
-const FormPage = () => {
+const CurrentTaskPage = () => {
   return (
-    <PageContainer hasHeader className="FormPage">
-      <FormComponent />
+    <PageContainer className="FormPage">
+      <CurrentTaskComponent />
     </PageContainer>
   )
 }
 
-export default FormPage;
+export default CurrentTaskPage;

@@ -3,21 +3,21 @@ import {useLocation} from 'react-router-dom';
 import PageContainer from './PageContainer';
 
 
-const FormComponent = () => {
+const SettingsComponent = () => {
   const location = useLocation();
 
   return (
     <div>
-        <h2>This is the form page.</h2>
+        <h2>This is the settings page.</h2>
     </div>
   )
 }
-const FormPage = () => {
+const SettingsPage = () => {
   return (
-    <PageContainer hasHeader className="FormPage">
-      <FormComponent />
+    <PageContainer className="FormPage">
+      <SettingsComponent />
     </PageContainer>
   )
 }
 
-export default FormPage;
+export default SettingsPage;

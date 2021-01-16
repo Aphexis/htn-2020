@@ -1,11 +1,15 @@
 @import './constants';
 
 .landing {
-    // background-color: green;
     width: 100%;
     &-image{
         width: 50%;
     }
+}
+
+.authpage {
+    width: 100%;
+    height: 100%;
 }
 
 .button {

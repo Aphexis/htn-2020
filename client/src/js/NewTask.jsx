@@ -3,21 +3,21 @@ import {useLocation} from 'react-router-dom';
 import PageContainer from './PageContainer';
 
 
-const FormComponent = () => {
+const NewTaskComponent = () => {
   const location = useLocation();
 
   return (
     <div>
-        <h2>This is the form page.</h2>
+        <h2>This is the new task page.</h2>
     </div>
   )
 }
-const FormPage = () => {
+const NewTaskPage = () => {
   return (
-    <PageContainer hasHeader className="FormPage">
+    <PageContainer className="FormPage">
       <FormComponent />
     </PageContainer>
   )
 }
 
-export default FormPage;
+export default NewTaskPage;

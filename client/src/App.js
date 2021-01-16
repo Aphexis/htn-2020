@@ -2,22 +2,26 @@ import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import LandingPage from './js/LandingPage';
 import AuthPage from './js/AuthPage';
+import VonagePage from './js/Vonage'
 // import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/custom.scss';
+import FormPage from './js/FormPage';
+import ComparisonPage from './js/ComparisonPage';
 
 const App = () => {
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Switch>
-          <Route path="/" component={LandingPage} />
-          <Route path="/signup" render={(props) => <AuthPage {...props} isSignUp={true}/>} />
-          <Route path="/login" render={(props) => <AuthPage {...props} isSignUp={false}/>} />
-        </Switch>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route path="/signup" component={AuthPage} />
+        <Route path="/vonage" component={VonagePage} />
+        <Route path="/form" component={FormPage} />
+        <Route path="/comparison/:comparisonId" component={ComparisonPage} />
+        <Route path="/comparison" component={ComparisonPage} />
+        <Route path="/" component={LandingPage} />
+      </Switch>
+    </BrowserRouter>
   )
 }
 
