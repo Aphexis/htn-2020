@@ -3,6 +3,11 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import LandingPage from './js/LandingPage';
 import AuthPage from './js/AuthPage';
 import VonagePage from './js/Vonage'
+import CurrentTaskPage from './js/CurrentTask'
+import HistoryPage from './js/HistoryPage'
+import NewTaskPage from './js/NewTask'
+import ToDoPage from './js/ToDo'
+import TaskCompletePage from './js/TaskComplete'
 // import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -16,6 +21,11 @@ const App = () => {
       <Switch>
         <Route path="/signup" component={AuthPage} />
         <Route path="/vonage" component={VonagePage} />
+        <Route path="/currenttask" component={CurrentTaskPage} />
+        <Route path="/history" component={HistoryPage} />
+        <Route path="/newtask" component={NewTaskPage} />
+        <Route path="/todo" component={ToDoPage} />
+        <Route path="/taskcomplete" component={TaskCompletePage} />
         <Route path="/form" component={FormPage} />
         <Route path="/comparison/:comparisonId" component={ComparisonPage} />
         <Route path="/comparison" component={ComparisonPage} />

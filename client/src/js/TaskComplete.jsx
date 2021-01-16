@@ -3,21 +3,21 @@ import {useLocation} from 'react-router-dom';
 import PageContainer from './PageContainer';
 
 
-const ToDoComponent = () => {
+const TaskCompleteComponent = () => {
   const location = useLocation();
 
   return (
     <div>
-        <h2>This is the todo page.</h2>
+        <h2>This is the task complete page.</h2>
     </div>
   )
 }
-const ToDoPage = () => {
+const TaskCompletePage = () => {
   return (
     <PageContainer className="FormPage">
-      <ToDoComponent />
+      <TaskCompleteComponent />
     </PageContainer>
   )
 }
 
-export default ToDoPage;
+export default TaskCompletePage;

@@ -9,7 +9,7 @@ const CurrentTaskComponent = () => {
 
   return (
     <div>
-        <h2>This is the form page.</h2>
+        <h2>This is the current task page.</h2>
     </div>
   )
 }

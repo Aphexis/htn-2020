@@ -15,7 +15,7 @@ const NewTaskComponent = () => {
 const NewTaskPage = () => {
   return (
     <PageContainer className="FormPage">
-      <FormComponent />
+      <NewTaskComponent />
     </PageContainer>
   )
 }

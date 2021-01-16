@@ -3,21 +3,21 @@ import {useLocation} from 'react-router-dom';
 import PageContainer from './PageContainer';
 
 
-const ToDoComponent = () => {
+const HistoryComponent = () => {
   const location = useLocation();
 
   return (
     <div>
-        <h2>This is the todo page.</h2>
+        <h2>This is the history page.</h2>
     </div>
   )
 }
-const ToDoPage = () => {
+const HistoryPage = () => {
   return (
     <PageContainer className="FormPage">
-      <ToDoComponent />
+      <HistoryComponent />
     </PageContainer>
   )
 }
 
-export default ToDoPage;
+export default HistoryPage;

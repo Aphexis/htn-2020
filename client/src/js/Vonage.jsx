@@ -110,4 +110,4 @@ const VonagePage = () => {
   )
 }
 
-export default Vonage;
+export default VonagePage;
