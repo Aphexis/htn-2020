@@ -1,7 +1,7 @@
 {
-  "name": "RecipeComparer",
+  "name": "HTN 2020",
   "version": "0.1.0",
-  "description": "Web app for comparing recipes",
+  "description": "Be productive, or suffer the consequences!",
   "private": true,
   "engines": {
     "node": "10.x"

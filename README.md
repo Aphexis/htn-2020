@@ -1,5 +1,5 @@
-# Recipe Comparer
-This is a React and Express app for comparing recipes! Currently deployed (in development) at https://recipe-comparer.herokuapp.com/.
+# HTN Hack
+This is a React and Express app that will be deployed on Heroku!
 
 ## Development
 The frontend lives within the `client` folder, and the backend lives within the `server` folder. Each has their own `package.json` - install packages for the frontend/backend within their respective folders. The global `package.json` is used to run the app as a whole (in deployment) and doesn't have any npm modules associated with it.
@@ -33,6 +33,6 @@ npm run dev --prefix server
 ```
 
 ## Deployment
-The app is deployed on Heroku at https://recipe-comparer.herokuapp.com/.
+The app will be deployed on Heroku.
 
 The entire app, frontend and backend, uses one deployment through the `heroku-postbuild` script (the frontend is built in /client/build, and the server serves the built files).
