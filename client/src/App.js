@@ -7,7 +7,6 @@ import ComparisonPage from './js/ComparisonPage';
 import './App.css';
 
 const App = () => {
-  // document.title = 'Recipe Comparer';
   return (
     <BrowserRouter>
       <Switch>

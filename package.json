@@ -1,7 +1,7 @@
 {
-  "name": "RecipeComparer",
+  "name": "HTN 2020",
   "version": "0.1.0",
-  "description": "Web app for comparing recipes",
+  "description": "Be productive, or suffer the consequences!",
   "private": true,
   "engines": {
     "node": "10.x"
@@ -13,5 +13,7 @@
     "eject": "cd client && react-scripts eject",
     "heroku-postbuild": "npm install --prefix server && npm install --prefix client --only=dev && npm install --prefix client && npm run build --prefix client"
   },
-  "dependencies": {}
+  "dependencies": {
+    "dotenv": "^8.2.0"
+  }
 }
