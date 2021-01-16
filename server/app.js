@@ -4,9 +4,12 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var Nexmo = require('nexmo');
+require('dotenv').config();
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var friendsRouter = require('./routes/friends');
+var tasksRouter = require('./routes/tasks');
 
 var app = express();
 
@@ -38,7 +41,9 @@ app.use(cookieParser());
 
 // API endpoints
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/friends', friendsRouter);
+app.use('/api/tasks', tasksRouter);
 
 // Test API endpoint
 app.get('/api/getList', (req,res) => {
