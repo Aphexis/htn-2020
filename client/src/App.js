@@ -8,7 +8,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/custom.scss';
 
 const App = () => {
-  // document.title = 'Recipe Comparer';
   return (
     <div className="App">
       <BrowserRouter>
