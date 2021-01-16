@@ -4,15 +4,18 @@ import PageContainer from './PageContainer';
 import { Button } from 'react-bootstrap';
 import graphic from '../assets/landing-logo.PNG';
 import '../css/PageContainer.scss';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const LandingComponent = () => {
   let history = useHistory();
-  console.log(graphic);
+  let handleClick = () => {
+    console.log("hello");
+  }
   return (
     <div className="landing">
-        <img src={graphic} alt="this is image" className="landing-image"/>
+        <img src={graphic} alt="blahblah" className="landing-image"/>
         <div className="button-div">
-          <Button type="button" className="module green-2 button" onclick={() => history.push("signup")}>Sign Up</Button>
+          <Button type="link" className="module green-2 button" onClick={handleClick}>Sign Up</Button>
           <Button type="button" className="module green-2 button" onclick={() => history.push("login")}>Log In</Button>
         </div>
     </div>

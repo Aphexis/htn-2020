@@ -4,12 +4,9 @@ import PageContainer from './PageContainer';
 
 
 const AuthComponent = () => {
-  const location = useLocation();
-
   return (
     <div>
-        <h2>This is the form page.</h2>
-        {location.state.fromLanding && <h3>You came from the landing page!</h3>}
+        <h2>History</h2>
     </div>
   )
 }
