@@ -37,7 +37,8 @@ const TaskCompleteComponent = ({ completeTask }) => {
   }
 
   return (
-    <div className={"module authpage" + (completeTask ? " green-2" : " red")}>
+    <div>
+    {name && <div className={"module authpage" + (completeTask ? " green-2" : " red")}>
       {completeTask ?
         <div>
           <p>
@@ -73,6 +74,7 @@ const TaskCompleteComponent = ({ completeTask }) => {
           </div>
         </div>
       }
+    </div>}
     </div>
   )
 }
