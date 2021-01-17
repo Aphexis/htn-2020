@@ -1,0 +1,47 @@
+@import './constants';
+
+.landing {
+    width: 100%;
+    &-image{
+        width: 50%;
+    }
+}
+
+.authpage {
+    width: 200%;
+    margin-left: -50%;
+    height: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    padding: 10%;
+    align-items: center;
+    
+}
+
+.button {
+    width: 20%;
+    &-div {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+    &-1 {
+        &:hover, :active, :before, :after {
+            background-color: $green-1 !important;
+        }
+    }
+    &-2 {
+        &:hover, :active, :before, :after {
+            background-color: $green-2 !important;
+        }
+    }
+}
+
+.input {
+    width: 80%;
+    margin: 2%;
+    padding: 2% 5%;
+    text-align: center;
+}
