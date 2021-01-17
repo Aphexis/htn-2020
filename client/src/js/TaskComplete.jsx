@@ -38,12 +38,12 @@ const TaskCompleteComponent = ({ completeTask }) => {
           <p>was not completed in time</p>
           <div className="animated fadeOut">
             <TextLoop interval={50} >
-              <span>Work hard 😤</span>
-              <span>Go stretch! 🧘</span>
-              <span>Back to work 🔥</span>
-              <span>Drink water 🚰</span>
-              <span>Keep going 😊</span>
-              <span>Stay hydrated!</span>
+              <span>Punishment #1</span>
+              <span>Punishment #2</span>
+              <span>Punishment #3</span>
+              <span>Punishment #4</span>
+              <span>Punishment #5</span>
+              <span>Punishment #6</span>
             </TextLoop>{" "}
           </div>
           <div>

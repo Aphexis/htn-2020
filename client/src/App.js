@@ -4,6 +4,7 @@ import LandingPage from './js/LandingPage';
 import AuthPage from './js/AuthPage';
 import VonagePage from './js/Vonage'
 import CurrentTaskPage from './js/CurrentTask'
+import HallofFamePage from './js/HallofFame'
 import HistoryPage from './js/HistoryPage'
 import NewTaskPage from './js/NewTask'
 import ToDoPage from './js/ToDo'
@@ -25,6 +26,7 @@ const App = () => {
         <Route path="/login" component={AuthPage} />
         <Route path="/vonage" component={VonagePage} />
         <Route path="/currenttask" component={CurrentTaskPage} />
+        <Route path="/halloffame" component={HallofFamePage} />
         <Route path="/history" component={HistoryPage} />
         <Route path="/newtask" component={NewTaskPage} />
         <Route path="/todo/edit/:taskId" component={EditTaskPage} />
