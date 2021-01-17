@@ -9,9 +9,17 @@ import { useHistory } from 'react-router-dom';
 const TaskCompleteComponent = () => {
   let history = useHistory();
 
+  let handleExit = () => {
+    history.push("/todo");
+  }
+
   return (
     <div className="module authpage green-2">
-        <h2>This is the task complete page.</h2>
+      <p>
+        Congratulations on completing your task!
+      </p>
+        <h2>Task Name {/* change based on task */}</h2>
+      <Button className="green-1 button-1 shadow-none" type="button" onClick={handleExit}>Back to Home</Button>
     </div>
   )
 }
