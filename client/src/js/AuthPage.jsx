@@ -14,20 +14,39 @@ const AuthComponent = ({signUp}) => {
   const [ password, setPassword ] = useState("");
   let history = useHistory();
 
-  let handleSubmit = () => {
+  let handleSubmit = async () => {
     console.log(`${username} ${numberTextRaw} ${password}`)
     // perform check here, if it comes back true then
     let pass = true;
     if (signUp) {
-
+      const response = await fetch('/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({username, password, phone: numberTextRaw}),
+      });
+      console.log(response);
+      if (response.status != 200) {
+        pass = false;
+      }
     } else {
-
+      const response = await fetch('/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({username, password}),
+      });
+      console.log(response);
+      // if response.status = 401, log in failed
+      if (response.status == 401) {
+        pass = false;
+      }
     }
 
     if (pass) {
       if (signUp) {
         history.push("/login");
       } else {
+        // const response = await fetch('/api/friends');
+        // console.log(response);
         history.push("/todo");
       }
     } else {

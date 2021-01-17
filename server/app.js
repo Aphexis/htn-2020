@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 var logger = require('morgan');
 var Nexmo = require('nexmo');
 var passport = require('passport');
+var session = require('express-session');
 var LocalStrategy = require('passport-local').Strategy;
 var authHelpers = require('./auth/_helpers');
 
@@ -44,11 +45,11 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-// app.use(session({
-//   secret: process.env.SECRET_KEY,
-//   resave: false,
-//   saveUninitialized: true
-// }));
+app.use(session({
+  secret: process.env.SECRET_KEY,
+  resave: false,
+  saveUninitialized: true
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.json());
@@ -69,14 +70,28 @@ app.get('/auth', (req, res, next) => { // test endpoint
   }
 })
 
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+  models.User.findOne({id: id})
+  .then((user) => { done(null, user); })
+  .catch((err) => { done(err,null); });
+});
+
 passport.use(new LocalStrategy((username, password, done) => {
   // check to see if the username exists
-  models.User.findOne({username: username})
+  models.User.findOne({where: {username: username}})
   .then((user) => {
-    if (!user) return done(null, false);
-    if (!authHelpers.comparePass(password, user.password)) {
+    if (!user) {
+      console.log('not logged in, wrong user');
       return done(null, false);
+    } else if (!authHelpers.comparePass(password, user.password)) {
+      console.log('not logged in, wrong pw');
+      return done(null, false);      
     } else {
+      console.log('logged in w auth');
       return done(null, user);
     }
   })
@@ -84,10 +99,13 @@ passport.use(new LocalStrategy((username, password, done) => {
 }));
 
 app.post('/auth/login',
-  passport.authenticate('local', { successRedirect: '/todo',
-                                   failureRedirect: '/login',
-                                   failureFlash: true })
-);
+  passport.authenticate('local'),
+  function(req, res) {
+    // If this function gets called, authentication was successful.
+    // `req.user` contains the authenticated user.
+    res.redirect('/users/' + req.user.username);
+    // res.status(200).json(models.userToJSON(user));
+  });
 
 app.post('/auth/register', async (req, res, next)  => {
   try {
@@ -98,9 +116,10 @@ app.post('/auth/register', async (req, res, next)  => {
     const user = await models.User.create({
         username: req.body.username,
         password: password,
-        // phone: req.body.phone,
+        phone: req.body.phone,
     });
     console.log(models.userToJSON(user));
+    res.status(200).json(models.userToJSON(user));
     // passport.authenticate('local', (err, user, info) => {
     //   if (user) { res.status(200).json(models.userToJSON(user)); }
     // })(req, res, next);
