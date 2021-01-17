@@ -1,13 +1,16 @@
 import React from 'react';
-import {useLocation} from 'react-router-dom';
 import PageContainer from './PageContainer';
+import { Button, Modal } from 'react-bootstrap';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../css/custom.scss';
+import { useHistory } from 'react-router-dom';
 
 
 const TaskCompleteComponent = () => {
-  const location = useLocation();
+  let history = useHistory();
 
   return (
-    <div>
+    <div className="module authpage green-2">
         <h2>This is the task complete page.</h2>
     </div>
   )
