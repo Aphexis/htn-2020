@@ -59,9 +59,9 @@ const HallofFameComponent = () => {
     <div className="module todo green-2">
       <div className="line">
         <Button className="module task-l green-1 button-1" onClick={() => {toggleTasks(true)}}>Hall of Fame</Button>
-        <Button className="module task-r red" onClick={() => {toggleTasks(false)}}>Wall of Shame</Button>
+        <Button className="module task-r red button-3" onClick={() => {toggleTasks(false)}}>Wall of Shame</Button>
       </div>
-        <HallofFame tasks={tasks} color={color} />
+      <HallofFame tasks={tasks} color={color} />
     </div>
   )
 }
