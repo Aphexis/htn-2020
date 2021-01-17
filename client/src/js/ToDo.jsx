@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import PageContainer from './PageContainer';
 import { Button } from 'react-bootstrap';
 import '../css/PageContainer.scss';
@@ -7,7 +7,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import TodoList from './ToDoList'
 
 const ToDoComponent = () => {
-  const location = useLocation();
   let history = useHistory();
   const [tasks, setTasks] = useState([
     {
