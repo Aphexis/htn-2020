@@ -23,6 +23,8 @@ var fs = require('fs');
 
 var app = express();
 
+console.log(process.env.SECRET_KEY)
+
 // vonage setup
 const nexmo = new Nexmo({
   apiKey: '87bf5295',
