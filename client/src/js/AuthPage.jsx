@@ -12,6 +12,7 @@ const AuthComponent = ({signUp}) => {
   const [ numberText, setNumberText ] = useState("");
   const [ numberTextRaw, setNumberTextRaw ] = useState(""); // not sure how to handle area codes, so we can probably just add a 1 to the beginning of the phone number and call it a day
   const [ password, setPassword ] = useState("");
+  const [ error, setError ] = useState(false);
   let history = useHistory();
 
   let handleSubmit = async () => {
@@ -42,6 +43,7 @@ const AuthComponent = ({signUp}) => {
     }
 
     if (pass) {
+      setError(false);
       if (signUp) {
         history.push("/login");
       } else {
@@ -51,6 +53,7 @@ const AuthComponent = ({signUp}) => {
       }
     } else {
       // set error message
+      setError(true);
     }
   }
 
@@ -76,6 +79,8 @@ const AuthComponent = ({signUp}) => {
         <input className="module input green-2" type="text" placeholder="username" value={username} onChange={(e) => setUsername(e.target.value)}/>
         { signUp ? <input className="module input green-2" type="text" placeholder="phone number" value={numberText} onKeyDown={handleNumberChange}/> : null}
         <input className="module input green-2" type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+        <a className="link-small" href={signUp ? "/login" : "/signup"}>{ signUp ? "Already have an account? Log In!" : "Don't have an account? Sign Up!"}</a>
+        { error ? <p className="error">{signUp ? "It seems like you are already registered." : "Invalid credentials."}</p> : null }
         <Button className="module button-1 green-1 shadow-none" type="button" onClick={handleSubmit}>Submit</Button>
     </div>
   );
