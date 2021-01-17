@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var models = require('../models');
 
+// GET /api/tasks/active
 // get tasks by status & current user (active, complete, failed)
 router.get('/:status', async function(req, res, next) {
     try {
@@ -20,6 +21,7 @@ router.get('/:status', async function(req, res, next) {
     }
 });
 
+// POST /api/tasks
 // add a task (name, deadline, friend)
 router.post('/', async ({body}, res, next) => {
     try {
