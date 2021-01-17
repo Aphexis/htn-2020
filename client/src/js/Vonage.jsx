@@ -20,7 +20,7 @@ const Vonage = () => {
     };
 
     fetch('/api/sendText', requestOptions)
-    .then(res => res.json())
+    .then(res => res.json)
     
   }
 
