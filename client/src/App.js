@@ -7,6 +7,7 @@ import CurrentTaskPage from './js/CurrentTask'
 import HistoryPage from './js/HistoryPage'
 import NewTaskPage from './js/NewTask'
 import ToDoPage from './js/ToDo'
+import SettingsPage from './js/Settings'
 import TaskCompletePage from './js/TaskComplete'
 // import logo from './logo.svg';
 import './App.css';
@@ -26,6 +27,7 @@ const App = () => {
         <Route path="/history" component={HistoryPage} />
         <Route path="/newtask" component={NewTaskPage} />
         <Route path="/todo" component={ToDoPage} />
+        <Route path="/settings" component={SettingsPage} />
         <Route path="/taskcomplete" component={TaskCompletePage} />
         <Route path="/form" component={FormPage} />
         <Route path="/comparison/:comparisonId" component={ComparisonPage} />
