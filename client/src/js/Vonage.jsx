@@ -16,7 +16,7 @@ const Vonage = () => {
     let requestOptions = {
       method: "POST",
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ "message" : "hello there my dear friend. it is nice to see you again."})
+      body: JSON.stringify({ "message" : "Heard you didn't finish your task. Pathetic, thou withered weather-bitten skainsmate"})
     };
 
     fetch('/api/sendText', requestOptions)
@@ -28,7 +28,7 @@ const Vonage = () => {
     let requestOptions = {
       method: "POST",
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ "message" : "hello there my dear friend. it is nice to see you again."})
+      body: JSON.stringify({ "message" : "Heard you didn't finish your task. Pathetic, thou withered weather-bitten skainsmate"})
     };
 
     fetch('/api/makeCall', requestOptions)

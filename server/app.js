@@ -34,7 +34,7 @@ const nexmo = new Nexmo({
 });
 
 const from = '12264088550';
-const to = '16476390488';
+const to = '16479185272';
 var text_ctr = 0;
 var call_ctr = 0;
 var request_id = "";
@@ -172,7 +172,7 @@ app.post('/upload',function(req, res) {
 app.post('/api/sendText', (req, res) => {
   console.log(req.body)
   text_ctr += 1;
-  const text = `#${text_ctr}: ${req.body["message"]}`;
+  const text = `${req.body["message"]}`;
   console.log(text)
   nexmo.message.sendSms(from, to, text);
   res.json("text");
@@ -188,7 +188,7 @@ app.post('/api/makeCall', (req, res) => {
     {
       action: 'talk',
       voiceName: 'Brian',
-      text: req.body["message"] + ` this is call number ${call_ctr}`,
+      text: req.body["message"],
     },
   ];
 
