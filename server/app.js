@@ -27,13 +27,13 @@ console.log(process.env.SECRET_KEY)
 
 // vonage setup
 const nexmo = new Nexmo({
-  apiKey: '87bf5295',
-  apiSecret: 'i0oeJccEnznHhBfW',
-  applicationId: '01347063-6248-42b3-bf3a-371d66947d3b',
+  apiKey: '9c65ee35',
+  apiSecret: 'nQy0NWzj0cqnuWnB',
+  applicationId: '1b8242c6-5983-403d-9e92-ac3bb1257f25',
   privateKey: './secret/private.key',
 });
 
-const from = '16137679934';
+const from = '12264088550';
 const to = '16476390488';
 var text_ctr = 0;
 var call_ctr = 0;
