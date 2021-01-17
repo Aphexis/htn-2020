@@ -256,15 +256,15 @@ app.post('/answer', function(req, res) {
           "content": {
               "type": "image",
               "image": {
-                  "url": "https://upload.wikimedia.org/wikipedia/commons/b/b2/Hausziege_04.jpg"
+                  "url": "https://sayingimages.com/wp-content/uploads/baby-goat-memes.jpg"
               }
           }
       }
   },
   {
       auth: {
-          username:'87bf5295',
-          password:'i0oeJccEnznHhBfW'
+          username:'9c65ee35',
+          password:'nQy0NWzj0cqnuWnB'
       }
   }).then(response => {
       //console.dir(response);
