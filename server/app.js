@@ -83,13 +83,13 @@ passport.use(new LocalStrategy((username, password, done) => {
   .catch((err) => { return done(err); });
 }));
 
-app.post('/login',
-  passport.authenticate('local', { successRedirect: '/auth',
+app.post('/auth/login',
+  passport.authenticate('local', { successRedirect: '/todo',
                                    failureRedirect: '/login',
                                    failureFlash: true })
 );
 
-app.post('/register', async (req, res, next)  => {
+app.post('/auth/register', async (req, res, next)  => {
   try {
     // TO-DO: check if user already exists
     // console.log('hi');
