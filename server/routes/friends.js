@@ -18,10 +18,10 @@ router.get('/', async function(req, res, next) {
 });
 
 // add friend for current user
-router.post('/', async ({body}, res, next) => {
+router.post('/', async ({body, user}, res, next) => {
     try {
       const friend = await models.Friend.create({
-          name: body.name, phone: body.phone, userId: req.user.id
+        name: body.name, phone: body.phone, userId: user.id
       }); 
       res.status(200).json(models.friendToJSON(friend));
     } catch (err) {

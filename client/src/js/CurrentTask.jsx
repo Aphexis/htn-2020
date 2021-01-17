@@ -94,6 +94,7 @@ const CurrentTaskComponent = () => {
         console.log(res);
         if (res) {
           setShow(false);
+          history.push(`/todo/edit/${taskId}`);
         } else {
           console.log("Incorrect PIN");
         }

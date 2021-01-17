@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {useLocation} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import PageContainer from './PageContainer';
 import { Button, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -7,13 +8,14 @@ import '../css/custom.scss';
 import { useHistory } from 'react-router-dom';
 
 
-const NewTaskComponent = () => {
+const EditTaskComponent = () => {
   const [ taskname, setTaskname ] = useState("");  
   const [ completeTime, setCompleteTime ] = useState("");
   const [ friends, setFriends ] = useState([]);
   const [ friend, setFriend ] = useState(0);
   const [ hardMode, setHardMode ] = useState(false);
   let history = useHistory();
+  let {taskId} = useParams();
 
   useEffect(() => {
     const getFriends = async () => {
@@ -22,8 +24,18 @@ const NewTaskComponent = () => {
       console.log(friends);
       setFriends(friends);
     }
-    getFriends();
 
+    const getTask = async(id) => {
+        const resp = await fetch(`/api/tasks/one/${id}`);
+      const task = await resp.json();
+      console.log(task);
+      setTaskname(task.name);
+      const date = new Date(task.deadline);
+      setCompleteTime(date);
+      setFriend(task.friend);
+    }
+    getFriends();
+    getTask(taskId);
   }, [])
 
   let handleSubmit = async () => {
@@ -31,15 +43,15 @@ const NewTaskComponent = () => {
     // create a new task
     let pass = true;
     // check if this is a valid task?
-    const response = await fetch('/api/tasks', {
-      method: 'POST',
+    const response = await fetch(`/api/tasks/edit/${taskId}`, {
+      method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({name: taskname, deadline: completeTime, friendId: friend}),
     });
     console.log(response);
     if (pass) {
       // maybe post here? maybe before
-      history.push("/todo");
+      history.push(`/todo/${taskId}`);
     }
   }
 
@@ -59,11 +71,15 @@ const NewTaskComponent = () => {
         </div>
         <div className="input-group">
           <label className="text input-label">Assign to friend</label>
-          <select className="module input grey" id="friend" name="friend" onChange={(e) => setFriend(e.target.value)}>
-            {friends.map((friend) => (
-              <option value={friend.id}>{friend.name}</option>
+          {friend > 0 && <select className="module input grey" id="friend" name="friend" onChange={(e) => setFriend(e.target.value)}>
+            {friends.map((f) => ( f.id == friend ?
+                <option value={f.id} selected>{f.name}</option>
+                :
+                <option value={f.id}>{f.name}</option>
             ))}
-          </select>
+            {/* {friends.map((f) => (
+                    return <option value={f.id} selected="selected"}>{f.name}</option>)} */}
+          </select>}
           {/* <input className="module input grey" type="text" value={friend} onChange={(e) => setFriend(e.target.value)}/> */}
         </div>
         <span className="text input-label">Hard Mode?
@@ -79,12 +95,12 @@ const NewTaskComponent = () => {
     </div>
   );
 }
-const NewTaskPage = () => {
+const EditTaskPage = () => {
   return (
     <PageContainer>
-      <NewTaskComponent />
+      <EditTaskComponent />
     </PageContainer>
   )
 }
 
-export default NewTaskPage;
+export default EditTaskPage;
