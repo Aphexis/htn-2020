@@ -10,6 +10,7 @@ import NewTaskPage from './js/NewTask'
 import ToDoPage from './js/ToDo'
 import SettingsPage from './js/Settings'
 import TaskCompletePage from './js/TaskComplete'
+import EditTaskPage from './js/EditTask';
 // import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -28,9 +29,12 @@ const App = () => {
         <Route path="/halloffame" component={HallofFamePage} />
         <Route path="/history" component={HistoryPage} />
         <Route path="/newtask" component={NewTaskPage} />
-        <Route path="/todo" component={ToDoPage} />
+        <Route path="/todo/edit/:taskId" component={EditTaskPage} />
+        <Route path="/todo/complete/:taskId" component={TaskCompletePage} />
+        <Route path="/todo/fail/:taskId" component={TaskCompletePage} />
+        <Route path="/todo/:taskId" component={CurrentTaskPage} />
+        <Route path="/todo" component={ToDoPage} />        
         <Route path="/settings" component={SettingsPage} />
-        <Route path="/taskcomplete" component={TaskCompletePage} />
         <Route path="/form" component={FormPage} />
         <Route path="/comparison/:comparisonId" component={ComparisonPage} />
         <Route path="/comparison" component={ComparisonPage} />
@@ -39,42 +43,5 @@ const App = () => {
     </BrowserRouter>
   )
 }
-
-/*
-const App = () => {
-  const [list, setList] = useState(null);
-
-  useEffect(() => {
-    const getList = () => {
-      fetch('/api/getList')
-      .then(res => res.json())
-      .then(list => setList(list))
-    }
-
-    getList();
-    // console.log(list);
-  }, []);
-
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-          Here's something cool: {list}
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-*/
 
 export default App;

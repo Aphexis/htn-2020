@@ -19,13 +19,26 @@ const SettingsComponent = () => {
   const [ pshow, setPshow ] = useState(false);
   const [ m, setM ] = useState("");
   const [pic, setPic] = useState();
+  const [friends, setFriends] = useState([]);
+
+  useEffect(() => {
+    const getFriends = async () => {
+      const resp = await fetch(`/api/friends`);
+      const friends = await resp.json();
+      console.log(friends);
+      setFriends(friends);
+    }
+    getFriends();
+
+  }, [fshow])
+
 
   // fetch list of friends here as array? sorry not sure exactly what format this is
-  let friends = [
-    { id: 1, name: "Stephanie", phone: "1234567890", userId: 420},
-    { id: 2, name: "Julia", phone: "4321586790", userId: 96},
-    { id: 3, name: "Wen", phone: "0987654321", userId: 10},
-  ]
+  // let friends = [
+  //   { id: 1, name: "Stephanie", phone: "1234567890", userId: 420},
+  //   { id: 2, name: "Julia", phone: "4321586790", userId: 96},
+  //   { id: 3, name: "Wen", phone: "0987654321", userId: 10},
+  // ]
 
   let messages = [ // fetched
     "u suck",
@@ -41,11 +54,17 @@ const SettingsComponent = () => {
     return number.substring(0, 3) + "-" + number.substring(3, 6) + "-" + number.slice(6);
   }
 
-  let handleSubmit = () => {
+  let handleSubmit = async () => {
     console.log(`${fname} ${numberTextRaw}`);
 
     let pass = true;
     // check if user exists? idk lol
+    const response = await fetch('/api/friends', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({name: fname, phone: numberTextRaw}),
+    });
+    console.log(response);
     if (pass) {
       // add to friends list, rerender the component underneath
       setFshow(false);

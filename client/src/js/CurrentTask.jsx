@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import {useParams} from 'react-router-dom';
 import PageContainer from './PageContainer';
 import { Button, Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -15,7 +16,7 @@ const renderTime = ({ remainingTime }) => {
   return `${hours}:${minutes}:${seconds}`
 };
 
-function ClockComponent() {
+function ClockComponent({duration}) {
   return (
     <div
       className="timer-wrapper"
@@ -25,7 +26,7 @@ function ClockComponent() {
       }}>
       <CountdownCircleTimer
         isPlaying
-        duration={28900} //change duration based on task
+        duration={duration} //change duration based on task
         colors={[["#004777", 0.33], ["#F7B801", 0.33], ["#A30000"]]}>
         {renderTime}
       </CountdownCircleTimer>
@@ -35,14 +36,59 @@ function ClockComponent() {
 
 const CurrentTaskComponent = () => {
   let history = useHistory();
+  let {taskId} = useParams();
 
   const [show, setShow] = useState(false);
   const [value, setValue] = useState("");
+  const [name, setName] = useState("");
+  const [deadline, setDeadline] = useState("");
+  const [timeRemaining, setTimeRemaining] = useState(-1);
+  const [modal, setModal] = useState('');
+
+  useEffect(() => {
+    const failTask = async () => {
+      const response = await fetch(`/api/tasks/fail/${taskId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      console.log(response);
+    }
+    const getTask = async (id) => {
+      const resp = await fetch(`/api/tasks/one/${id}`);
+      const task = await resp.json();
+      console.log(task);
+      setName(task.name);
+      const date = new Date(task.deadline);
+      const now = new Date();
+      console.log(date, now)
+      setDeadline(date); // turn into date obj?
+      var diff = Math.abs(date - now);
+      console.log(diff/1000);
+      setTimeRemaining(diff/1000); // should do this based on creation time
+      const interval = setInterval(() => {
+        const timeNow = new Date();
+        console.log(timeNow);
+        if (date < timeNow) {
+          // fail the task
+          console.log('wow');
+          // fail the task
+          failTask();
+          // console.log(response);
+          history.push(`/todo/fail/${taskId}`);
+          clearInterval(interval);
+        }
+      }, 1000)
+    }
+    console.log(taskId);
+    getTask(taskId);
+  }, [])
 
   let handleClose = () => setShow(false);
 
   let handleCompleted = () => {
-    history.push("/taskcomplete");
+    setShow(true);
+    setModal('completed');
+    // history.push("/taskcomplete");
   }
 
   let handleExit = () => {
@@ -57,12 +103,27 @@ const CurrentTaskComponent = () => {
       body: JSON.stringify({ "pin": `${value}` })
     };
 
+    const completeTask = async () => {
+      const response = await fetch(`/api/tasks/complete/${taskId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
     fetch('/api/verify/check', requestOptions)
       .then(res => res.json())
       .then(res => {
         console.log(res);
         if (res) {
-          setShow(false);
+            setShow(false);
+            setModal('');
+          if (modal == 'edit') {
+            history.push(`/todo/edit/${taskId}`);
+          } else if (modal == 'completed') {
+            // ADD COMPLETING API CALL
+            completeTask();
+            history.push(`/todo/complete/${taskId}`);
+          }
         } else {
           console.log("Incorrect PIN");
         }
@@ -86,15 +147,16 @@ const CurrentTaskComponent = () => {
       .then(res => res.json)
 
     setShow(true);
+    setModal('edit');
   }
 
   return (
     <div className="module authpage green-2">
       <h1>
-        Task Name {/* change based on task */}
+        {name && name}
       </h1>
       <br />
-      <ClockComponent />
+      {timeRemaining >= 0 && <ClockComponent duration={timeRemaining} /> }
       <br />
       <p className="changing motivation">
         <TextLoop interval={2100} springConfig={{ stiffness: 50, damping: 4 }}>
@@ -110,10 +172,10 @@ const CurrentTaskComponent = () => {
         <Button className="green-1 button-1 shadow-none" type="button" onClick={handleEdit}>Edit Task</Button>
         <Modal className="modal" show={show} onHide={handleClose} centered>
           <Modal.Header closeButton>
-            <Modal.Title>Verify testing</Modal.Title>
+            <Modal.Title>{`Want to ${modal == 'edit' ? 'edit' : 'complete'} your task?`}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p className="text-muted">Ask your friend for the code!</p>
+            <p className="text-muted">Ask your friend for the verification code!</p>
             <label>Enter your verification code:</label>
             <input type="number" placeholder="####" maxlength="4" value={value} onChange={handleChange} />
             <br />

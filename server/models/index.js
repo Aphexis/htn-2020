@@ -46,7 +46,8 @@ taskToJSON = (task) => {
         //     id: task.friend_id
         // },
         deadline: task.deadline, // date parsing?
-        status: task.status
+        status: task.status,
+        createdAt: task.createdAt,
     }
 }
 

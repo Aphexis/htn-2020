@@ -9,37 +9,41 @@ import TodoList from './ToDoList'
 const ToDoComponent = () => {
   let history = useHistory();
   const [tasks, setTasks] = useState([
-    {
-      id: 0, 
-      name: "Submit Hack to Devpost",
-      time: "33:43:06"
-    },
-    {
-      id: 1, 
-      name: "Finish CS Assignment 1",
-      time: "48:43:06"
-    },
-    {
-      id: 2, 
-      name: "Finish Math Assignment 1",
-      time: "75:43:06"
-    },
-    {
-      id: 3, 
-      name: "Complete Statistics Quiz",
-      time: "168:43:06"
-    }
+    // {
+    //   id: 0, 
+    //   name: "Submit Hack to Devpost",
+    //   time: "33:43:06"
+    // },
+    // {
+    //   id: 1, 
+    //   name: "Finish CS Assignment 1",
+    //   time: "48:43:06"
+    // },
+    // {
+    //   id: 2, 
+    //   name: "Finish Math Assignment 1",
+    //   time: "75:43:06"
+    // },
+    // {
+    //   id: 3, 
+    //   name: "Complete Statistics Quiz",
+    //   time: "168:43:06"
+    // }
   ]);
 
   useEffect(() => {
-    const getList = () => {
+    const getList = async () => {
+      console.log('doing fetch');
       fetch('/api/tasks/active')
-      .then(res => res.json())
-      .then(list => setTasks(list))
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        setTasks(data);
+      });
     }
 
+    console.log('getting list');
     getList();
-    // console.log(list);
   }, []);
 
   return (
@@ -47,7 +51,7 @@ const ToDoComponent = () => {
       <h2 className="title">To-Do List</h2>
       <div className="line">
         <a className="task-l">Task</a>
-        <a className="task-r">Due in...</a>
+        <a className="task-r">Due on...</a>
       </div>
       <TodoList tasks={tasks}/>
       <div className="line">
