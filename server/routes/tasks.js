@@ -2,6 +2,20 @@ var express = require('express');
 var router = express.Router();
 var models = require('../models');
 
+// GET task by id
+// GET /api/tasks/one/:id
+router.get('/one/:id', async function(req, res, next) {
+    console.log('task by id');
+    try {
+      let task = await models.Task.findOne({id: req.params.id});
+      let result = models.taskToJSON(task);
+      console.log(result);
+      res.status(200).json(result);
+    } catch (err) {
+      console.error(`Error: ${err}`)
+    }
+});
+
 // get tasks by status & current user (active, complete, failed)
 router.get('/:status', async function(req, res, next) {
     try {

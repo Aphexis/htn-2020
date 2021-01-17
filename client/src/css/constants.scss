@@ -84,6 +84,6 @@ $z_index_max: 40; // Cover everything (modal)
 
 .module {
     @include Font;
-    border: 3px solid;
-    border-radius: 25px;
+    border: 2px solid;
+    border-radius: 15px;
 }
