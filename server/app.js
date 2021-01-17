@@ -71,11 +71,11 @@ app.get('/auth', (req, res, next) => { // test endpoint
 })
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, user.username);
 });
 
-passport.deserializeUser((id, done) => {
-  models.User.findOne({id: id})
+passport.deserializeUser((username, done) => {
+  models.User.findOne({where: {username: username}})
   .then((user) => { done(null, user); })
   .catch((err) => { done(err,null); });
 });
@@ -249,6 +249,7 @@ app.post('/event', function(req, res) {
 app.get('*', (req,res) =>{
   res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
 });
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

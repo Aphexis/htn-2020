@@ -26,7 +26,8 @@ const App = () => {
         <Route path="/currenttask" component={CurrentTaskPage} />
         <Route path="/history" component={HistoryPage} />
         <Route path="/newtask" component={NewTaskPage} />
-        <Route path="/todo" component={ToDoPage} />
+        <Route path="/todo/:taskId" component={CurrentTaskPage} />
+        <Route path="/todo" component={ToDoPage} />        
         <Route path="/settings" component={SettingsPage} />
         <Route path="/taskcomplete" component={TaskCompletePage} />
         <Route path="/form" component={FormPage} />

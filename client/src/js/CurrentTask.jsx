@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import {useParams} from 'react-router-dom';
 import PageContainer from './PageContainer';
 import { Button, Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -15,7 +16,7 @@ const renderTime = ({ remainingTime }) => {
   return `${hours}:${minutes}:${seconds}`
 };
 
-function ClockComponent() {
+function ClockComponent({duration}) {
   return (
     <div
       className="timer-wrapper"
@@ -25,7 +26,7 @@ function ClockComponent() {
       }}>
       <CountdownCircleTimer
         isPlaying
-        duration={28900} //change duration based on task
+        duration={duration} //change duration based on task
         colors={[["#004777", 0.33], ["#F7B801", 0.33], ["#A30000"]]}>
         {renderTime}
       </CountdownCircleTimer>
@@ -35,9 +36,39 @@ function ClockComponent() {
 
 const CurrentTaskComponent = () => {
   let history = useHistory();
+  let {taskId} = useParams();
 
   const [show, setShow] = useState(false);
   const [value, setValue] = useState("");
+  const [name, setName] = useState("");
+  const [deadline, setDeadline] = useState("");
+  const [timeRemaining, setTimeRemaining] = useState(-1);
+
+  useEffect(() => {
+    const getTask = async (id) => {
+      const resp = await fetch(`/api/tasks/one/${id}`);
+      const task = await resp.json();
+      console.log(task);
+      setName(task.name);
+      const date = new Date(task.deadline);
+      const now = new Date();
+      console.log(date, now)
+      setDeadline(date); // turn into date obj?
+      var diff = Math.abs(date - now);
+      console.log(diff/1000);
+      setTimeRemaining(diff/1000); // should do this based on creation time
+      setInterval(() => {
+        const timeNow = new Date();
+        console.log(timeNow);
+        if (date < timeNow) {
+          // trigger modal
+          console.log('wow');
+        }
+      }, 1000)
+    }
+    console.log(taskId);
+    getTask(taskId);
+  }, [])
 
   let handleClose = () => setShow(false);
 
@@ -91,10 +122,10 @@ const CurrentTaskComponent = () => {
   return (
     <div className="module authpage green-2">
       <h1>
-        Task Name {/* change based on task */}
+        {name && name}
       </h1>
       <br />
-      <ClockComponent />
+      {timeRemaining >= 0 && <ClockComponent duration={timeRemaining} /> }
       <br />
       <p className="changing motivation">
         <TextLoop interval={2100} springConfig={{ stiffness: 50, damping: 4 }}>

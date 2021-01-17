@@ -20,7 +20,7 @@ router.get('/', async function(req, res, next) {
 router.get('/:username', async function(req, res, next) {
   console.log('here')
   try {
-    let user = await models.User.findOne({username: req.params.username});
+    let user = await models.User.findOne({where: {username: req.params.username}});
     let result = models.userToJSON(user);
     console.log(result);
     res.status(200).json(result);
