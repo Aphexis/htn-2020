@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/custom.scss';
 import { useHistory } from 'react-router-dom';
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import TextLoop from "react-text-loop";
 
 const renderTime = ({ remainingTime }) => {
   const hours = ("0" + Math.floor(remainingTime / 3600)).slice(-2)
@@ -39,7 +40,7 @@ const CurrentTaskComponent = () => {
   const [value, setValue] = useState("");
 
   let handleClose = () => setShow(false);
-  
+
   let handleCompleted = () => {
     history.push("/taskcomplete");
   }
@@ -53,19 +54,19 @@ const CurrentTaskComponent = () => {
     let requestOptions = {
       method: "POST",
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ "pin" : `${value}`})
+      body: JSON.stringify({ "pin": `${value}` })
     };
 
     fetch('/api/verify/check', requestOptions)
-    .then(res => res.json())
-    .then(res => {
-      console.log(res);
-      if (res) {
-        setShow(false);
-      } else {
-        console.log("Incorrect PIN");
-      }
-    })
+      .then(res => res.json())
+      .then(res => {
+        console.log(res);
+        if (res) {
+          setShow(false);
+        } else {
+          console.log("Incorrect PIN");
+        }
+      })
 
     // setShow(false);
   }
@@ -82,7 +83,7 @@ const CurrentTaskComponent = () => {
     // };
 
     fetch('/api/verify/request')
-    .then(res => res.json)
+      .then(res => res.json)
 
     setShow(true);
   }
@@ -96,24 +97,31 @@ const CurrentTaskComponent = () => {
       <ClockComponent />
       <br />
       <p className="changing motivation">
-        Motivational Line Here {/* change based on timing */}
+        <TextLoop interval={2200} springConfig={{ stiffness: 50, damping: 4 }}>
+          <span>Work hard 😤</span>
+          <span>Go stretch! 🧘</span>
+          <span>Back to work 🔥</span>
+          <span>Drink water 🚰</span>
+          <span>Keep going 😊</span>
+          <span>Stay hydrated!</span>
+        </TextLoop>{" "}
       </p>
       <div className="button-div">
-        <Button className="module green-1 button-1 shadow-none" type="button" onClick={handleEdit}>Edit Task</Button>
+        <Button className="green-1 button-1 shadow-none" type="button" onClick={handleEdit}>Edit Task</Button>
         <Modal className="modal" show={show} onHide={handleClose} centered>
           <Modal.Header closeButton>
             <Modal.Title>Verify testing</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-          <p className="text-muted">Ask your friend for the code!</p>
+            <p className="text-muted">Ask your friend for the code!</p>
             <label>Enter your verification code:</label>
-            <input type="number" placeholder="####" value={value} onChange={handleChange} />
+            <input type="number" placeholder="####" maxlength="4" value={value} onChange={handleChange} />
             <br />
-            <Button className="module green-1 button-1 shadow-none" type="button" onClick={handleSubmit}>Verify</Button>
+            <Button className="green-1 button-1 shadow-none" type="button" onClick={handleSubmit}>Verify</Button>
           </Modal.Body>
         </Modal>
-        <Button className="module green-1 button-1 shadow-none" type="button" onClick={handleCompleted}>Task Completed!</Button>
-        <Button className="mmodule green-1 button-1 shadow-none" type="button" onClick={handleExit}>Exit Work Mode</Button>
+        <Button className="green-1 button-1 shadow-none" type="button" onClick={handleCompleted}>Task Completed!</Button>
+        <Button className="green-1 button-1 shadow-none" type="button" onClick={handleExit}>Exit Work Mode</Button>
       </div>
     </div>
   )
