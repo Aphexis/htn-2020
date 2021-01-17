@@ -17,14 +17,14 @@ var app = express();
 
 // vonage setup
 const nexmo = new Nexmo({
-  apiKey: '6c1ba49d',
-  apiSecret: 'Mx95yDBEjmXAFxn8',
-  applicationId: 'ebff6c77-40c2-4357-b46b-7af62d1bf1cd',
+  apiKey: '87bf5295',
+  apiSecret: 'i0oeJccEnznHhBfW',
+  applicationId: '01347063-6248-42b3-bf3a-371d66947d3b',
   privateKey: './secret/private.key',
 });
 
-const from = '15877603707';
-const to = '14167799080';
+const from = '16137679934';
+const to = '16476390488';
 var text_ctr = 0;
 var call_ctr = 0;
 var request_id = "";
