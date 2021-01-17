@@ -5,6 +5,7 @@ import { Button } from 'react-bootstrap';
 import graphic from '../assets/landing-logo.PNG';
 import '../css/PageContainer.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../css/custom.scss';
 
 const LandingComponent = () => {
   let history = useHistory();

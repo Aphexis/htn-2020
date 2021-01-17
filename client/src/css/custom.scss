@@ -28,13 +28,27 @@
         justify-content: space-evenly;
     }
     &-1 {
-        &:hover, :active, :before, :after {
+        background-color: $green-3 !important;
+        border: none;
+        outline: none !important;
+        border-color: $green-1 !important;
+        &:hover, :active, :before, :after, :focus, :visited, :default, :visited, ::selection, ::before, ::after, .focus, .active, ::backdrop, ::content {
             background-color: $green-1 !important;
+            border: none;
+            outline: none !important;
+            border-color: $green-1 !important;
         }
     }
     &-2 {
-        &:hover, :active, :before, :after {
+        background-color: white !important;
+        border: none;
+        outline: none !important;
+        border-color: $green-2 !important;
+        &:hover, :active, :before, :after, :focus, :visited, :default, :visited, ::selection, ::before, ::after, .focus, .active, ::backdrop, ::content {
             background-color: $green-2 !important;
+            border: none;
+            outline: none !important;
+            border-color: $green-2 !important;
         }
     }
 }
@@ -44,6 +58,13 @@
     margin: 2%;
     padding: 2% 5%;
     text-align: center;
+    justify-self: center;
+    &-group {
+        display: flex;
+        flex-direction: column;
+        text-align: left;
+        background-color: blue;
+    }
 }
 
 *:focus {
