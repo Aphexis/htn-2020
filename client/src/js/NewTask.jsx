@@ -17,11 +17,17 @@ const NewTaskComponent = () => {
   let handleSubmit = () => {
     console.log(`${taskname} ${completeTime} ${friend} ${hardMode}`);
     // create a new task
+    let pass = true;
+    // check if this is a valid task?
+    if (pass) {
+      // maybe post here? maybe before
+      history.push("/todo");
+    }
   }
 
 
   return (
-    <div className="module authpage big green-2">
+    <div className="module todo green-2">
         <div>
           <h3 className="input-group">New Task</h3>
         </div>
