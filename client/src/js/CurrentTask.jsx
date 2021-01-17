@@ -97,7 +97,7 @@ const CurrentTaskComponent = () => {
       <ClockComponent />
       <br />
       <p className="changing motivation">
-        <TextLoop interval={2200} springConfig={{ stiffness: 50, damping: 4 }}>
+        <TextLoop interval={2100} springConfig={{ stiffness: 50, damping: 4 }}>
           <span>Work hard 😤</span>
           <span>Go stretch! 🧘</span>
           <span>Back to work 🔥</span>
