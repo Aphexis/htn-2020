@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import PageContainer from './PageContainer';
 import { Button } from 'react-bootstrap';
 import '../css/PageContainer.scss';
