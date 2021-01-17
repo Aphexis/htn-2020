@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var models = require('../models');
 
+// GET /api/tasks/active
 // GET task by id
 // GET /api/tasks/one/:id
 router.get('/one/:id', async function(req, res, next) {
@@ -34,6 +35,7 @@ router.get('/:status', async function(req, res, next) {
     }
 });
 
+// POST /api/tasks
 // add a task (name, deadline, friend)
 router.post('/', async ({body}, res, next) => {
     try {

@@ -1,7 +1,8 @@
+@import url('https://fonts.googleapis.com/css?family=Varela+Round');
 @import '~bootstrap/scss/bootstrap.scss';
 
 @mixin Font {
-    font-family: 'Verdana', sans-serif;
+    font-family: 'Varela Round', sans-serif;
     font-style: normal;
     font-weight: 400px;
     letter-spacing: 0.02em;
@@ -92,9 +93,4 @@ $z_index_max: 40; // Cover everything (modal)
 .text {
     @include Font;
     color: #475141;
-}
-
-.big {
-    margin-left: 100%;
-    width: 300%;
 }

@@ -17,8 +17,13 @@ var usersRouter = require('./routes/users');
 var friendsRouter = require('./routes/friends');
 var tasksRouter = require('./routes/tasks');
 const models = require('./models');
+var cors = require('cors');
+var multer = require('multer');
+var fs = require('fs');
 
 var app = express();
+
+console.log(process.env.SECRET_KEY)
 
 // vonage setup
 const nexmo = new Nexmo({
@@ -33,6 +38,8 @@ const to = '16476390488';
 var text_ctr = 0;
 var call_ctr = 0;
 var request_id = "";
+var num_pics = -1;
+
 
 // Serve static files from the React app first
 app.use(express.static(path.join(__dirname, '../client/build')));
@@ -53,6 +60,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyParser.json());
+app.use(cors())
 
 // API endpoints
 app.use('/', indexRouter);
@@ -133,6 +141,31 @@ app.get('/api/getList', (req,res) => {
   var list = ["item1", "item2", "item3"];
   res.json(list);
   console.log('Sent list of items');
+});
+
+// upload
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+  cb(null, 'images')
+},
+filename: function (req, file, cb) {
+  num_pics += 1;
+  cb(null, `pic${num_pics}.png`);
+}
+})
+var upload = multer({ storage: storage }).single('file')
+app.post('/upload',function(req, res) {
+     
+  upload(req, res, function (err) {
+         if (err instanceof multer.MulterError) {
+             return res.status(500).json(err)
+         } else if (err) {
+             return res.status(500).json(err)
+         }
+    return res.status(200).send(req.file)
+
+  })
+
 });
 
 // sends a text
@@ -249,7 +282,6 @@ app.post('/event', function(req, res) {
 app.get('*', (req,res) =>{
   res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
 });
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
