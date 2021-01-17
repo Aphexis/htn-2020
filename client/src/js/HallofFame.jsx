@@ -21,7 +21,7 @@ const HallofFame = ( { tasks, color }) => {
 const HallofFameComponent = () => {
   const location = useLocation();
   let history = useHistory();
-  const [alltasks, setAllTasks] = useState([
+  const [allTasks, setAllTasks] = useState([
     {
       id: 1,
       name: "my task",
@@ -46,12 +46,29 @@ const HallofFameComponent = () => {
   const [tasks, setTasks] = useState([]) //must initialize value
   const [color, setColor] = useState([])
 
+  useEffect(() => {
+    const getList = async () => {
+      console.log('doing fetch');
+      fetch('/api/tasks')
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        setAllTasks(data);
+        setTasks(data.filter(task => task.status === "complete"))
+        setColor("task green-1")
+      });
+    }
+
+    console.log('getting list');
+    getList();
+  }, []);
+
   function toggleTasks(isHall) {
     if (isHall) {
-      setTasks(alltasks.filter(task => task.status === "completed"))
+      setTasks(allTasks.filter(task => task.status === "complete"))
       setColor("task green-1")
     } else {
-      setTasks(alltasks.filter(task => task.status === "failed"))
+      setTasks(allTasks.filter(task => task.status === "failed"))
       setColor("task red")
     }
   }

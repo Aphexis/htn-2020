@@ -37,6 +37,24 @@ router.get('/:status', async function(req, res, next) {
     }
 });
 
+// get tasks by current user (active, complete, and failed)
+router.get('/', async function(req, res, next) {
+    try {
+        console.log('getting tasks');
+        console.log(req.user.id);
+      let tasks = await models.Task.findAll({where: {
+          userId: BigInt(req.user.id),
+      }});
+      let result = tasks.map((task) => {
+        return models.taskToJSON(task);
+      })
+      console.log(result);
+      res.status(200).json(result);
+    } catch (err) {
+      console.error(`Error: ${err}`);
+    }
+});
+
 // POST /api/tasks
 // add a task (name, deadline, friend)
 router.post('/', async ({body, user}, res, next) => {

@@ -43,6 +43,7 @@ const CurrentTaskComponent = () => {
   const [name, setName] = useState("");
   const [deadline, setDeadline] = useState("");
   const [timeRemaining, setTimeRemaining] = useState(-1);
+  const [modal, setModal] = useState('');
 
   useEffect(() => {
     const getTask = async (id) => {
@@ -73,7 +74,9 @@ const CurrentTaskComponent = () => {
   let handleClose = () => setShow(false);
 
   let handleCompleted = () => {
-    history.push("/taskcomplete");
+    setShow(true);
+    setModal('completed');
+    // history.push("/taskcomplete");
   }
 
   let handleExit = () => {
@@ -93,8 +96,13 @@ const CurrentTaskComponent = () => {
       .then(res => {
         console.log(res);
         if (res) {
-          setShow(false);
-          history.push(`/todo/edit/${taskId}`);
+            setShow(false);
+            setModal('');
+          if (modal == 'edit') {
+            history.push(`/todo/edit/${taskId}`);
+          } else if (modal == 'completed') {
+            history.push(`/todo/complete/${taskId}`);
+          }
         } else {
           console.log("Incorrect PIN");
         }
@@ -118,6 +126,7 @@ const CurrentTaskComponent = () => {
       .then(res => res.json)
 
     setShow(true);
+    setModal('edit');
   }
 
   return (
@@ -142,10 +151,10 @@ const CurrentTaskComponent = () => {
         <Button className="green-1 button-1 shadow-none" type="button" onClick={handleEdit}>Edit Task</Button>
         <Modal className="modal" show={show} onHide={handleClose} centered>
           <Modal.Header closeButton>
-            <Modal.Title>Verify testing</Modal.Title>
+            <Modal.Title>{`Want to ${modal == 'edit' ? 'edit' : 'complete'} your task?`}</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <p className="text-muted">Ask your friend for the code!</p>
+            <p className="text-muted">Ask your friend for the verification code!</p>
             <label>Enter your verification code:</label>
             <input type="number" placeholder="####" maxlength="4" value={value} onChange={handleChange} />
             <br />

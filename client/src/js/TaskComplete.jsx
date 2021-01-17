@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PageContainer from './PageContainer';
+import {useParams} from 'react-router-dom';
 import { Button, Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/custom.scss';
@@ -8,8 +9,20 @@ import TextLoop from "react-text-loop";
 
 const TaskCompleteComponent = ({ completeTask }) => {
   let history = useHistory();
+  let {taskId} = useParams();
 
   const [show, setShow] = useState(false);
+  const [name, setName] = useState('');
+
+  useEffect(() => {
+    const getTask = async (id) => {
+      const resp = await fetch(`/api/tasks/one/${id}`);
+      const task = await resp.json();
+      console.log(task);
+      setName(task.name);
+    }
+    getTask(taskId);
+  }, []);
 
   useEffect(() => {
     let timer = setTimeout(() => {
@@ -30,12 +43,12 @@ const TaskCompleteComponent = ({ completeTask }) => {
           <p>
             Congratulations on completing your task!
           </p>
-          <h2>Task Name {/* change based on task */}</h2>
+          <h2>{name}</h2>
           <Button className="green-1 button-1 shadow-none" type="button" onClick={handleExit}>Back to Home</Button>
         </div>
         : <div>
-          <h2>Task Name {/* change based on task */}</h2>
-          <p>was not completed in time</p>
+          <h2>{name}</h2>
+          <p>was not completed in time. Uh oh.</p>
           <div className="animated fadeOut">
             <TextLoop interval={50} >
               <span>Punishment #1</span>
@@ -66,7 +79,7 @@ const TaskCompleteComponent = ({ completeTask }) => {
 const TaskCompletePage = () => {
   return (
     <PageContainer className="FormPage">
-      { false ?
+      { window.location.pathname.includes("/complete") ?
         <TaskCompleteComponent completeTask={true} />
         : <TaskCompleteComponent completeTask={false} />
       }

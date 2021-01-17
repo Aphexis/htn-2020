@@ -51,7 +51,7 @@ const ToDoComponent = () => {
       <h2 className="title">To-Do List</h2>
       <div className="line">
         <a className="task-l">Task</a>
-        <a className="task-r">Due in...</a>
+        <a className="task-r">Due on...</a>
       </div>
       <TodoList tasks={tasks}/>
       <div className="line">
