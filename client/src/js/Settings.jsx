@@ -5,6 +5,7 @@ import { Button, Form, Link, Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/custom.scss';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 
 
 const SettingsComponent = () => {
@@ -17,7 +18,7 @@ const SettingsComponent = () => {
   const [ mshow, setMshow ] = useState(false);
   const [ pshow, setPshow ] = useState(false);
   const [ m, setM ] = useState("");
-  const [ mArray, setMArray ] = useState([]);
+  const [pic, setPic] = useState();
 
   // fetch list of friends here as array? sorry not sure exactly what format this is
   let friends = [
@@ -57,14 +58,7 @@ const SettingsComponent = () => {
   let addMessage = () => {
     console.log(messages);
     console.log(m);
-    messages.push(m); // and in db?
     setMshow(false);
-  }
-
-  let deleteMessage = (message) => {
-    console.log(messages);
-    messages.splice(messages.indexOf(message), 1);
-    // remove from database
   }
 
   let handleNumberChange = (e) => {
@@ -81,6 +75,22 @@ const SettingsComponent = () => {
       setNumberText(numberText + (numberTextRaw.length == 3 || numberTextRaw.length == 6 ? "-" : "") + e.key);
       setNumberTextRaw(numberTextRaw + e.key);
     }
+  }
+
+  let onChangeHandler = (e) => {
+    console.log(e.target.files[0])
+    setPic(e.target.files[0]);
+  }
+
+  let uploadPic = () => {
+    const data = new FormData();
+    data.append('file', pic);
+    axios.post("/upload", data, {
+
+    }).then(res => {
+      console.log(res.statusText);
+    })
+    setPshow(false);
   }
 
   return (
@@ -141,7 +151,6 @@ const SettingsComponent = () => {
                       return (
                       <span className="list-row">
                         <p className="text float-left">{message}</p>
-                        <Button className="invis error shadow-none" onClick={() => deleteMessage(message)}>X</Button>
                       </span>
                     )})}
                   </div>
@@ -164,10 +173,12 @@ const SettingsComponent = () => {
                 <Modal.Title>Manage Pictures</Modal.Title>
               </Modal.Header>
               <Modal.Body>
+                <div className="input-group">
+
+                </div>
                 <form method="post" enctype="multipart/form-data" action="/upload">
-                    <input type="file" name="file" />
-                    <input type="submit" value="Submit"/>
-                    <img src="/image.png" />
+                  <input type="file" name="file" onChange={onChangeHandler}/>
+                  <Button type="button" className="module green-1 button-1 shadow-none" onClick={uploadPic}>Upload</Button>
                 </form>
               </Modal.Body>
             </Modal>
