@@ -2,11 +2,24 @@ var express = require('express');
 var router = express.Router();
 var models = require('../models');
 
+// GET task by id
+router.get('/one/:id', async function(req, res, next) {
+    console.log('task by id');
+    try {
+      let task = await models.Task.findOne({id: req.params.id});
+      let result = models.taskToJSON(task);
+      console.log(result);
+      res.status(200).json(result);
+    } catch (err) {
+      console.error(`Error: ${err}`)
+    }
+});
+
 // get tasks by status & current user (active, complete, failed)
 router.get('/:status', async function(req, res, next) {
     try {
       let tasks = await models.Task.findAll({where: {
-          userId: 1, // TO-DO: Use logged in user
+          userId: req.user.id, // TO-DO: Use logged in user
           status: req.params.status,
       }});
         // or user.getFriends() for a specific user object
@@ -26,7 +39,7 @@ router.post('/', async ({body}, res, next) => {
         // find friend?
         const task = await models.Task.create({
             name: body.name,
-            userId: 1,
+            userId: req.user.id,
             friendId: body.friendId,
             deadline: body.deadline,
             status: 'active'

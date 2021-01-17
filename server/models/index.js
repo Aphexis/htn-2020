@@ -1,4 +1,4 @@
-var Sequelize = require('sequelize-cockroachdb');
+var {Sequelize} = require('sequelize-cockroachdb');
 var fs = require('fs');
 const { DataTypes, Model } = require('sequelize-cockroachdb');
 const { urlencoded } = require('express');
@@ -15,6 +15,13 @@ var sequelize = new Sequelize(process.env.DB_DATABASE, process.env.DB_USER, proc
         }
     }
 });
+
+sequelize.authenticate().then(() => {
+    console.log('Authenticated to db');
+})
+.catch((err) => {
+    console.log(`DB connection error: ${err}`);
+})
 
 Task = sequelize.define('tasks', {
     name: DataTypes.STRING,
