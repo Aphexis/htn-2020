@@ -54,7 +54,7 @@ const ToDoComponent = () => {
       </div>
       <div className="button-div2">
         <Button type="link" className="module green-1 button-1" onClick={() => history.push("newtask")}>Add New Task</Button>
-        <Button type="link" className="module green-1 button-1" onClick={() => history.push("history")}>History</Button>
+        <Button type="link" className="module green-1 button-1" onClick={() => history.push("halloffame")}>Hall of Fame</Button>
         <Button type="link" className="module green-1 button-1" onClick={() => history.push("settings")}>Settings</Button>
       </div>
     </div>

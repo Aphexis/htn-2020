@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import PageContainer from './PageContainer';
 import { Button } from 'react-bootstrap';
 import '../css/PageContainer.scss';
@@ -20,6 +20,7 @@ const HallofFame = ( { tasks, color }) => {
 
 const HallofFameComponent = () => {
   const location = useLocation();
+  let history = useHistory();
   const [alltasks, setAllTasks] = useState([
     {
       id: 1,
@@ -58,10 +59,13 @@ const HallofFameComponent = () => {
   return (
     <div className="module todo green-2">
       <div className="line">
-        <Button className="module task-l green-1 button-1" onClick={() => {toggleTasks(true)}}>Hall of Fame</Button>
-        <Button className="module task-r red button-3" onClick={() => {toggleTasks(false)}}>Wall of Shame</Button>
+        <Button type="button" className="module task-l green-1 button-1" onClick={() => {toggleTasks(true)}}>Hall of Fame</Button>
+        <Button type="button" className="module task-r red button-3" onClick={() => {toggleTasks(false)}}>Wall of Shame</Button>
       </div>
       <HallofFame tasks={tasks} color={color} />
+      <div>
+        <Button type="button" className="task-r module green-1 button-1" onClick={() => history.push("todo")}>Exit</Button>
+      </div>
     </div>
   )
 }
