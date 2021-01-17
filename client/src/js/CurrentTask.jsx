@@ -46,6 +46,13 @@ const CurrentTaskComponent = () => {
   const [modal, setModal] = useState('');
 
   useEffect(() => {
+    const failTask = async () => {
+      const response = await fetch(`/api/tasks/fail/${taskId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      console.log(response);
+    }
     const getTask = async (id) => {
       const resp = await fetch(`/api/tasks/one/${id}`);
       const task = await resp.json();
@@ -58,12 +65,17 @@ const CurrentTaskComponent = () => {
       var diff = Math.abs(date - now);
       console.log(diff/1000);
       setTimeRemaining(diff/1000); // should do this based on creation time
-      setInterval(() => {
+      const interval = setInterval(() => {
         const timeNow = new Date();
         console.log(timeNow);
         if (date < timeNow) {
-          // trigger modal
+          // fail the task
           console.log('wow');
+          // fail the task
+          failTask();
+          // console.log(response);
+          history.push(`/todo/fail/${taskId}`);
+          clearInterval(interval);
         }
       }, 1000)
     }
@@ -91,6 +103,13 @@ const CurrentTaskComponent = () => {
       body: JSON.stringify({ "pin": `${value}` })
     };
 
+    const completeTask = async () => {
+      const response = await fetch(`/api/tasks/complete/${taskId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
     fetch('/api/verify/check', requestOptions)
       .then(res => res.json())
       .then(res => {
@@ -101,6 +120,8 @@ const CurrentTaskComponent = () => {
           if (modal == 'edit') {
             history.push(`/todo/edit/${taskId}`);
           } else if (modal == 'completed') {
+            // ADD COMPLETING API CALL
+            completeTask();
             history.push(`/todo/complete/${taskId}`);
           }
         } else {

@@ -5,6 +5,7 @@ html, body, #root, .App {
   align-items: center;
   justify-content: center;
   height: 100%;
+  background-color: #f5fffa;
 }
 
 .App-logo {
