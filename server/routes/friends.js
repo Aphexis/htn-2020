@@ -5,8 +5,8 @@ var models = require('../models');
 // get logged in user's friends
 router.get('/', async function(req, res, next) {
     try {
-      let friends = await models.Friend.findAll({where: {userId: 1}});
-        // or user.getFriends() for a specific user object
+        console.log(req.user);
+      let friends = await models.Friend.findAll({where: {userId: req.user.id}});
       let result = friends.map((user) => {
         return models.friendToJSON(user);
       })
@@ -20,8 +20,9 @@ router.get('/', async function(req, res, next) {
 // add friend for current user
 router.post('/', async ({body}, res, next) => {
     try {
-      const friend = await models.Friend.create({name: body.name, phone: body.phone, userId: 1}); 
-        // TO-DO: base userId on current user later
+      const friend = await models.Friend.create({
+          name: body.name, phone: body.phone, userId: req.user.id
+      }); 
       res.status(200).json(models.friendToJSON(friend));
     } catch (err) {
       console.error(`Error: ${err}`);

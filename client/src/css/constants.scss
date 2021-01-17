@@ -15,6 +15,7 @@ $purble: #5533CC;
 $background: #FFFFFF;
 $green-1: #93C47D;
 $green-2: #BEE4A7;
+$green-3: #BEE4A7;
 $grey: #475141;
 
 // $heading_font_family: "Roboto", "Fira Sans", "Poppins", "Avenir Next", Helvetica, Arial, sans-serif;
@@ -84,6 +85,16 @@ $z_index_max: 40; // Cover everything (modal)
 
 .module {
     @include Font;
-    border: 3px solid;
-    border-radius: 25px;
+    border: 2px solid;
+    border-radius: 15px;
+}
+
+.text {
+    @include Font;
+    color: #475141;
+}
+
+.big {
+    margin-left: 100%;
+    width: 300%;
 }

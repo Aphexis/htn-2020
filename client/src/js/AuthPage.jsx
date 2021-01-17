@@ -7,43 +7,76 @@ import '../css/custom.scss';
 import { useHistory } from 'react-router-dom';
 
 
-const AuthComponent = () => {
-  console.log(window.location.pathname)
-  const [ username, setUsername ] = useState("");  
+const AuthComponent = ({signUp}) => {
+  const [ username, setUsername ] = useState(""); 
+  const [ numberText, setNumberText ] = useState("");
+  const [ numberTextRaw, setNumberTextRaw ] = useState(""); // not sure how to handle area codes, so we can probably just add a 1 to the beginning of the phone number and call it a day
   const [ password, setPassword ] = useState("");
   let history = useHistory();
 
-  let handleSubmit = () => {
-    console.log(`${username} ${password}`)
+  let handleSubmit = async () => {
+    console.log(`${username} ${numberTextRaw} ${password}`)
     // perform check here, if it comes back true then
     let pass = true;
-    if (window.location.pathname == "/signup") {
-
+    if (signUp) {
+      const response = await fetch('/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({username, password, phone: numberTextRaw}),
+      });
+      console.log(response);
+      if (response.status != 200) {
+        pass = false;
+      }
     } else {
-
+      const response = await fetch('/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({username, password}),
+      });
+      console.log(response);
+      // if response.status = 401, log in failed
+      if (response.status == 401) {
+        pass = false;
+      }
     }
 
     if (pass) {
-      history.push("/todo");
+      if (signUp) {
+        history.push("/login");
+      } else {
+        // const response = await fetch('/api/friends');
+        // console.log(response);
+        history.push("/todo");
+      }
     } else {
       // set error message
     }
   }
 
-  let handleChangeU = (e) => {
-    setUsername(e.target.value);
-  }
-
-  let handleChangeP = (e) => {
-    setPassword(e.target.value);
+  let handleNumberChange = (e) => {
+    if (e.key == "Backspace") {
+      if (numberText.length > 3 && numberText.substring(numberText.length-2, numberText.length-1) == "-") {
+        console.log("bye dash")
+        setNumberText(numberText.substring(0, numberText.length-2));
+        setNumberTextRaw(numberTextRaw.substring(0, numberTextRaw.length-1));
+      } else if (numberTextRaw.length > 0) {
+        setNumberText(numberText.substring(0, numberText.length-1));
+        setNumberTextRaw(numberTextRaw.substring(0, numberTextRaw.length-1));
+      }
+    } else if ("1234567890".indexOf(e.key) > -1 && numberTextRaw.length < 10) { // is a number
+      setNumberText(numberText + (numberTextRaw.length == 3 || numberTextRaw.length == 6 ? "-" : "") + e.key);
+      setNumberTextRaw(numberTextRaw + e.key);
+    }
   }
 
   return (
     <div className="module authpage green-2">
-        <h2>{ window.location.pathname == "/signup" ? "Sign Up" : "Log In"}</h2>
-        <input className="module input green-2" type="text" placeholder="username" value={username} onChange={handleChangeU}/>
-        <input className="module input green-2" type="password" placeholder="password" value={password} onChange={handleChangeP}/>
-        <Button className="module green-1 button-1" type="button" onClick={handleSubmit}>Submit</Button>
+        <h2>{ signUp ? "Sign Up" : "Log In"}</h2>
+        <input className="module input green-2" type="text" placeholder="username" value={username} onChange={(e) => setUsername(e.target.value)}/>
+        { signUp ? <input className="module input green-2" type="text" placeholder="phone number" value={numberText} onKeyDown={handleNumberChange}/> : null}
+        <input className="module input green-2" type="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+        <Button className="module button-1 green-1 shadow-none" type="button" onClick={handleSubmit}>Submit</Button>
     </div>
   );
 }
@@ -51,7 +84,10 @@ const AuthComponent = () => {
 const AuthPage = () => {
   return (
     <PageContainer>
-      <AuthComponent />
+      { window.location.pathname == "/signup"
+        ? <AuthComponent signUp={true} />
+        : <AuthComponent signUp={false} />
+      }
     </PageContainer>
   )
 }
