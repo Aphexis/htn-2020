@@ -3,6 +3,7 @@ var router = express.Router();
 var models = require('../models');
 
 // GET task by id
+// GET /api/tasks/one/:id
 router.get('/one/:id', async function(req, res, next) {
     console.log('task by id');
     try {
