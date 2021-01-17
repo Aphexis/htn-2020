@@ -99,7 +99,7 @@ const CurrentTaskComponent = () => {
         Motivational Line Here {/* change based on timing */}
       </p>
       <div className="button-div">
-        <Button className="module green-1 button-1" type="button" onClick={handleEdit}>Edit Task</Button>
+        <Button className="module green-1 button-1 shadow-none" type="button" onClick={handleEdit}>Edit Task</Button>
         <Modal className="modal" show={show} onHide={handleClose} centered>
           <Modal.Header closeButton>
             <Modal.Title>Verify testing</Modal.Title>
@@ -109,11 +109,11 @@ const CurrentTaskComponent = () => {
             <label>Enter your verification code:</label>
             <input type="number" placeholder="####" value={value} onChange={handleChange} />
             <br />
-            <Button className="green-1 button-1" type="button" onClick={handleSubmit}>Verify</Button>
+            <Button className="module green-1 button-1 shadow-none" type="button" onClick={handleSubmit}>Verify</Button>
           </Modal.Body>
         </Modal>
-        <Button className="module green-1 button-1" type="button" onClick={handleCompleted}>Task Completed!</Button>
-        <Button className="module green-1 button-1" type="button" onClick={handleExit}>Exit Work Mode</Button>
+        <Button className="module green-1 button-1 shadow-none" type="button" onClick={handleCompleted}>Task Completed!</Button>
+        <Button className="mmodule green-1 button-1 shadow-none" type="button" onClick={handleExit}>Exit Work Mode</Button>
       </div>
     </div>
   )
