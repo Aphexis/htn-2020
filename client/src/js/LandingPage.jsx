@@ -13,8 +13,8 @@ const LandingComponent = () => {
     <div className="landing">
         <img src={graphic} alt="blahblah" className="landing-image"/>
         <div className="button-div">
-          <Button type="link" className="module green-2 button" onClick={() => history.push("signup")}>Sign Up</Button>
-          <Button type="button" className="module green-2 button" onClick={() => history.push("login")}>Log In</Button>
+          <Button type="link" className="module green-2 button-2" onClick={() => history.push("signup")}>Sign Up</Button>
+          <Button type="button" className="module green-2 button-2" onClick={() => history.push("login")}>Log In</Button>
         </div>
     </div>
   );

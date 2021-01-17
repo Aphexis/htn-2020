@@ -19,7 +19,8 @@ const App = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/signup" component={AuthPage} />
+        <Route path="/signup" component={AuthPage} /> 
+        <Route path="/login" component={AuthPage} />
         <Route path="/vonage" component={VonagePage} />
         <Route path="/currenttask" component={CurrentTaskPage} />
         <Route path="/history" component={HistoryPage} />
