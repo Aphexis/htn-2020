@@ -1,3 +1,4 @@
+require('dotenv').config();
 var createError = require('http-errors');
 var express = require('express');
 var axios = require('axios');
@@ -6,12 +7,16 @@ var cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 var logger = require('morgan');
 var Nexmo = require('nexmo');
-require('dotenv').config();
+var passport = require('passport');
+var session = require('express-session');
+var LocalStrategy = require('passport-local').Strategy;
+var authHelpers = require('./auth/_helpers');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var friendsRouter = require('./routes/friends');
 var tasksRouter = require('./routes/tasks');
+const models = require('./models');
 
 var app = express();
 
@@ -40,6 +45,13 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(session({
+  secret: process.env.SECRET_KEY,
+  resave: false,
+  saveUninitialized: true
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(bodyParser.json());
 
 // API endpoints
@@ -47,6 +59,74 @@ app.use('/', indexRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/friends', friendsRouter);
 app.use('/api/tasks', tasksRouter);
+
+app.get('/auth', (req, res, next) => { // test endpoint
+  if (req.user) {
+    console.log(models.userToJSON(req.user));
+    res.status(200).json(models.userToJSON(user));
+  } else {
+    console.log('not logged in');
+    res.status(400).json('not logged in');
+  }
+})
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+  models.User.findOne({id: id})
+  .then((user) => { done(null, user); })
+  .catch((err) => { done(err,null); });
+});
+
+passport.use(new LocalStrategy((username, password, done) => {
+  // check to see if the username exists
+  models.User.findOne({where: {username: username}})
+  .then((user) => {
+    if (!user) {
+      console.log('not logged in, wrong user');
+      return done(null, false);
+    } else if (!authHelpers.comparePass(password, user.password)) {
+      console.log('not logged in, wrong pw');
+      return done(null, false);      
+    } else {
+      console.log('logged in w auth');
+      return done(null, user);
+    }
+  })
+  .catch((err) => { return done(err); });
+}));
+
+app.post('/auth/login',
+  passport.authenticate('local'),
+  function(req, res) {
+    // If this function gets called, authentication was successful.
+    // `req.user` contains the authenticated user.
+    res.redirect('/users/' + req.user.username);
+    // res.status(200).json(models.userToJSON(user));
+  });
+
+app.post('/auth/register', async (req, res, next)  => {
+  try {
+    // TO-DO: check if user already exists
+    // console.log('hi');
+    const password = authHelpers.getHashedPassword(req.body.password.toString());
+    // console.log(2);
+    const user = await models.User.create({
+        username: req.body.username,
+        password: password,
+        phone: req.body.phone,
+    });
+    console.log(models.userToJSON(user));
+    res.status(200).json(models.userToJSON(user));
+    // passport.authenticate('local', (err, user, info) => {
+    //   if (user) { res.status(200).json(models.userToJSON(user)); }
+    // })(req, res, next);
+  } catch (err) {
+    console.error(`Error: ${err}`);
+  }
+});
 
 // Test API endpoint
 app.get('/api/getList', (req,res) => {

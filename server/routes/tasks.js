@@ -20,7 +20,7 @@ router.get('/one/:id', async function(req, res, next) {
 router.get('/:status', async function(req, res, next) {
     try {
       let tasks = await models.Task.findAll({where: {
-          userId: 1, // TO-DO: Use logged in user
+          userId: req.user.id, // TO-DO: Use logged in user
           status: req.params.status,
       }});
         // or user.getFriends() for a specific user object
@@ -40,7 +40,7 @@ router.post('/', async ({body}, res, next) => {
         // find friend?
         const task = await models.Task.create({
             name: body.name,
-            userId: 1,
+            userId: req.user.id,
             friendId: body.friendId,
             deadline: body.deadline,
             status: 'active'
