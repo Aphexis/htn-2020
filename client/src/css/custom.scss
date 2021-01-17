@@ -51,6 +51,18 @@
             border-color: $green-2 !important;
         }
     }
+    &-3 {
+        background-color: rgba(224, 102, 102, 0.7) !important;
+        border: none;
+        outline: none !important;
+        border-color: $red !important;
+        &:hover, :active, :before, :after, :focus, :visited, :default, :visited, ::selection, ::before, ::after, .focus, .active, ::backdrop, ::content {
+            background-color: $red !important;
+            border: none;
+            outline: none !important;
+            border-color: $red !important;
+        }
+    }
 }
 
 .input {

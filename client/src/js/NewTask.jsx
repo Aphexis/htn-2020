@@ -21,7 +21,7 @@ const NewTaskComponent = () => {
 
 
   return (
-    <div className="module authpage green-2">
+    <div className="module authpage big green-2">
         <div>
           <h3 className="input-group">New Task</h3>
         </div>
@@ -43,13 +43,16 @@ const NewTaskComponent = () => {
             <span class="slider round shadow-none"></span>
           </label>
         </span>
-        <Button className="module green-1 button-1 shadow-none" type="button" onClick={handleSubmit}>Submit</Button>
+        <div className="button-div">
+          <Button className="module green-1 button-1 shadow-none" type="button" onClick={handleSubmit}>Submit</Button>
+          <Button className="module red button-3 shadow-none" type="button" onClick={() => history.push("/todo")}>Cancel</Button>
+        </div>
     </div>
   );
 }
 const NewTaskPage = () => {
   return (
-    <PageContainer className="FormPage">
+    <PageContainer>
       <NewTaskComponent />
     </PageContainer>
   )
