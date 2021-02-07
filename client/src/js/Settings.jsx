@@ -18,6 +18,7 @@ const SettingsComponent = () => {
   const [ mshow, setMshow ] = useState(false);
   const [ pshow, setPshow ] = useState(false);
   const [ m, setM ] = useState("");
+  const [ mArray, setMArray] = useState([]);
   const [pic, setPic] = useState();
   const [friends, setFriends] = useState([]);
 
@@ -40,11 +41,7 @@ const SettingsComponent = () => {
   //   { id: 3, name: "Wen", phone: "0987654321", userId: 10},
   // ]
 
-  let messages = [ // fetched
-    "u suck",
-    "youre bad",
-    "baaaaaad"
-  ]
+  
 
   // useEffect(() => {
   //   setMArray(messages);
@@ -74,8 +71,17 @@ const SettingsComponent = () => {
 
   }
 
+  let openMessages = () => {
+    // fetch messages
+    setMArray([ // fetched
+      "u suck",
+      "youre bad",
+      "baaaaaad"
+    ]);
+    setMshow(true);
+  }
+
   let addMessage = () => {
-    console.log(messages);
     console.log(m);
     setMshow(false);
   }
@@ -118,7 +124,7 @@ const SettingsComponent = () => {
         <div className="list">
           <span className="list-row">
             <label className="text float-left">Friends List</label>
-            <Button variant="link" className="invis text float-right task-r shadow-none" onClick={() => setFshow(true)}>Add Friend</Button>
+            <Button variant="link" className="invis text float-right task-r shadow-none" onClick={openMessages}>Add Friend</Button>
           </span>
           <Modal show={fshow} onHide={() => setFshow(false)} className="module green-2">
             <Modal.Header closeButton>
@@ -156,7 +162,7 @@ const SettingsComponent = () => {
             {/* messages */}
             <span className="list-row">
               <label className="text float-left">Messages</label>
-              <Button variant="link" className="invis text float-right task-r shadow-none" onClick={() => setMshow(true)}>Manage</Button>
+              <Button variant="link" className="invis text float-right task-r shadow-none" onClick={openMessages}>Manage</Button>
             </span>
             <Modal show={mshow} onHide={() => setMshow(false)} className="module green-2">
               <Modal.Header closeButton>
@@ -166,7 +172,7 @@ const SettingsComponent = () => {
                 <div className="input-group">
                   <label className="text input-label">Your Messages</label>
                   <div className="module grey list-messages">
-                    {messages.map((message) => {
+                    {mArray.map((message) => {
                       return (
                       <span className="list-row">
                         <p className="text float-left">{message}</p>
